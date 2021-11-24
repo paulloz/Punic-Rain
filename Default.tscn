@@ -1,8 +1,13 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://DebugPanel.cs" type="Script" id=1]
+[ext_resource path="res://Ship/Ship.tscn" type="PackedScene" id=5]
 
 [node name="Default" type="Node2D"]
+
+[node name="Ship" parent="." instance=ExtResource( 5 )]
+position = Vector2( 512, 300 )
+rotation = -1.5708
 
 [node name="DebugPanel" type="CanvasLayer" parent="."]
 script = ExtResource( 1 )
