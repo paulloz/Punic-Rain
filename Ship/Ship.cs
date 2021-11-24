@@ -13,7 +13,7 @@ public class Ship : Node2D
 
     public override void _Ready()
     {
-        controller = new LinearBulletController(200.0f);
+        controller = new LinearBulletController(350.0f);
         muzzle = GetNode<Muzzle>("Muzzle");
     }
 

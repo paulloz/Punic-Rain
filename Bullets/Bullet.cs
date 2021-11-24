@@ -25,4 +25,9 @@ public class Bullet : Node2D
 
         return this;
     }
+
+    public void OnArea2DEntered(Area2D other)
+    {
+        QueueFree();
+    }
 }
