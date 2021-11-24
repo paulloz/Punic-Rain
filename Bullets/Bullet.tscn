@@ -1,8 +1,77 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Bullets/Bullet.cs" type="Script" id=1]
 [ext_resource path="res://Assets/tiles_packed.png" type="Texture" id=2]
 [ext_resource path="res://Bullets/BulletDebugDrawer.cs" type="Script" id=3]
+
+[sub_resource type="VisualShaderNodeTexture" id=7]
+source = 2
+
+[sub_resource type="VisualShaderNodeInput" id=8]
+input_name = "uv"
+
+[sub_resource type="VisualShaderNodeVectorDecompose" id=9]
+
+[sub_resource type="VisualShaderNodeVectorCompose" id=10]
+
+[sub_resource type="VisualShader" id=5]
+code = "shader_type canvas_item;
+
+
+
+void vertex() {
+// Output:0
+
+}
+
+void fragment() {
+// Input:4
+	vec3 n_out4p0 = vec3(UV, 0.0);
+
+// Texture:3
+	vec3 n_out3p0;
+	float n_out3p1;
+	{
+		vec4 _tex_read = texture(TEXTURE, n_out4p0.xy);
+		n_out3p0 = _tex_read.rgb;
+		n_out3p1 = _tex_read.a;
+	}
+
+// VectorDecompose:6
+	float n_out6p0 = n_out3p0.x;
+	float n_out6p1 = n_out3p0.y;
+	float n_out6p2 = n_out3p0.z;
+
+// VectorCompose:7
+	vec3 n_out7p0 = vec3(n_out6p0, n_out6p2, n_out6p1);
+
+// Output:0
+	COLOR.rgb = n_out7p0;
+	COLOR.a = n_out3p1;
+
+}
+
+void light() {
+// Output:0
+
+}
+"
+graph_offset = Vector2( -222.831, -32.8909 )
+mode = 1
+flags/light_only = false
+nodes/fragment/0/position = Vector2( 700, 200 )
+nodes/fragment/3/node = SubResource( 7 )
+nodes/fragment/3/position = Vector2( -220, 180 )
+nodes/fragment/4/node = SubResource( 8 )
+nodes/fragment/4/position = Vector2( -380, 180 )
+nodes/fragment/6/node = SubResource( 9 )
+nodes/fragment/6/position = Vector2( 140, 100 )
+nodes/fragment/7/node = SubResource( 10 )
+nodes/fragment/7/position = Vector2( 460, 100 )
+nodes/fragment/connections = PoolIntArray( 4, 0, 3, 0, 3, 1, 0, 1, 3, 0, 6, 0, 7, 0, 0, 0, 6, 0, 7, 0, 6, 1, 7, 2, 6, 2, 7, 1 )
+
+[sub_resource type="ShaderMaterial" id=6]
+shader = SubResource( 5 )
 
 [sub_resource type="Animation" id=1]
 resource_name = "Default"
@@ -43,6 +112,7 @@ radius = 6.0
 script = ExtResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="."]
+material = SubResource( 6 )
 texture = ExtResource( 2 )
 hframes = 12
 vframes = 10

@@ -1,3 +1,4 @@
+using System.Linq;
 using Godot;
 
 public class Ship : Node2D
@@ -9,20 +10,20 @@ public class Ship : Node2D
     private float slowModeMultiplier;
 
     private IBulletController controller;
-    private Muzzle muzzle;
+    private Weapon weapon;
 
     public override void _Ready()
     {
-        controller = new LinearBulletController(350.0f);
-        muzzle = GetNode<Muzzle>("Muzzle");
+        controller = new LinearBulletController(750.0f);
+        weapon = GetNode<Weapon>("Weapon");
     }
 
     public override void _PhysicsProcess(float delta)
     {
         Position += GetDirection() * GetSpeed() * delta;
 
-        if (Input.IsActionPressed("shoot") && muzzle.CanShoot())
-            muzzle.Shoot(controller);
+        if (Input.IsActionPressed("shoot") && weapon.CanShoot())
+            weapon.Shoot(controller);
     }
 
     private float GetSpeed()
